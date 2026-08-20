@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基数変換｜情報Ⅰ共通テスト対策問題集</title>
+<meta name="description" content="2進法・10進法・16進法は同じ数のちがう書き方です。位取りの重みを目で見ながら、変換の手順を身につけましょう。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%2315181c%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2218%22 font-family=%22monospace%22 fill=%22%23fff%22 text-anchor=%22middle%22%3E01%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="inner">
+    <span class="eyebrow">第 5 章　デジタル　5-2</span>
+    <h1>基数変換（pp.140-141）</h1>
+    <p class="lead">2進法・10進法・16進法は同じ数のちがう書き方です。位取りの重みを目で見ながら、変換の手順を身につけましょう。</p>
+    <p class="credit">Created by Dit-Lab.(Daiki ITO)　/　Supported by Tomoaki ATSUMI</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="step" id="step1">
+    <h2><span class="no">STEP 1</span>2進法 → 10進法（重みを足すだけ）</h2>
+    <p class="desc">ビットをクリックして0と1を切りかえてください。<strong>1が立っている位の重みを足す</strong>だけで10進法になります。</p>
+
+    <div class="panel">
+      <div class="bitrow" id="bits"></div>
+      <div class="calcline" id="calc1" style="margin-top:14px"></div>
+      <div class="grid c2" style="margin-top:14px">
+        <div class="metric" style="border:1px solid var(--rule);padding:12px">
+          <div class="k">10進法</div><div class="v" id="dec1" style="font-size:1.7rem">—</div></div>
+        <div class="metric" style="border:1px solid var(--rule);padding:12px">
+          <div class="k">16進法</div><div class="v" id="hex1" style="font-size:1.7rem">—</div></div>
+      </div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn sm" data-bin="00001110">1110（14）</button>
+        <button class="btn sm" data-bin="01100101">1100101（101）</button>
+        <button class="btn sm" data-bin="11010110">11010110</button>
+        <button class="btn sm ghost" id="randBin">でたらめ</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <h2><span class="no">STEP 2</span>10進法 → 2進法（2で割り続ける）</h2>
+    <p class="desc">2で割ってあまりを記録し、<strong>あまりを下から読む</strong>と2進法になります。</p>
+    <div class="panel">
+      <label class="fld" for="decIn">10進法の整数：<span class="mono" id="decInV">14</span></label>
+      <input type="range" id="decIn" min="0" max="255" step="1" value="14">
+      <div class="grid c2" style="margin-top:14px">
+        <div><h3 style="font-size:.84rem;color:var(--ink-2);margin-bottom:8px">割り算の手順</h3>
+          <div class="divsteps" id="divSteps"></div></div>
+        <div><h3 style="font-size:.84rem;color:var(--ink-2);margin-bottom:8px">結果</h3>
+          <div class="bigval" id="binOut"></div>
+          <div class="note info" id="divNote" style="margin-top:10px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step3">
+    <h2><span class="no">STEP 3</span>小数の変換</h2>
+    <p class="desc">小数は<strong>2をかけて、整数部分を上から読みます</strong>。逆に2進法の小数は 0.5・0.25・0.125… の重みを足します。</p>
+    <div class="panel">
+      <div class="grid c2">
+        <div>
+          <label class="fld" for="fracIn">10進法の小数：<span class="mono" id="fracInV">0.375</span></label>
+          <input type="range" id="fracIn" min="0" max="0.9990" step="0.0005" value="0.375">
+          <div class="btn-row" style="margin-top:8px">
+            <button class="btn sm" data-frac="0.375">0.375</button>
+            <button class="btn sm" data-frac="0.625">0.625</button>
+            <button class="btn sm" data-frac="0.5">0.5</button>
+            <button class="btn sm" data-frac="0.1">0.1（割り切れない）</button>
+          </div>
+          <div class="divsteps" id="fracSteps" style="margin-top:12px"></div>
+        </div>
+        <div>
+          <div class="bigval" id="fracOut"></div>
+          <div class="calcline" id="fracCalc" style="margin-top:12px"></div>
+          <div class="note" id="fracNote" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step4">
+    <h2><span class="no">STEP 4</span>2進法 ⇔ 16進法（4桁ずつ）</h2>
+    <p class="desc"><strong>2進法4桁が16進法1桁</strong>にちょうど対応します。区切って変換するだけです。</p>
+    <div class="panel">
+      <div class="hexmap" id="hexMap"></div>
+      <div class="note info" style="margin-top:12px">
+        2進法4桁で表せるのは0〜15の16通り。<span class="term" data-t="16進法">16進法</span>1桁も0〜Fの16通りなので、ぴったり対応します。
+        10以上は A・B・C・D・E・F で表します。
+      </div>
+      <div class="tbl-scroll" style="margin-top:12px"><table class="tbl" id="hexTable"></table></div>
+    </div>
+  </section>
+
+  <section class="step" id="step5">
+    <h2><span class="no">STEP 5</span>変換ドリル</h2>
+    <div class="panel">
+      <div class="qhead">
+        <span class="badge" id="dProgress">0 問</span>
+        <span class="badge">正解 <span class="score" id="dScore">0</span> / <span class="score" id="dTotal">0</span></span>
+      </div>
+      <div class="card-q"><div class="q-scene" id="dText"></div></div>
+      <div class="choice4" id="dChoices"></div>
+      <div class="note" id="dFb" hidden style="margin-top:12px"></div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn primary" id="dNext">次の問題</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="glossary">
+    <h2><span class="no">用語</span>この節で出てくることば</h2>
+    <div id="glossBox"></div>
+  </section>
+
+  <section class="step">
+    <h2><span class="no">まとめ</span>基数変換のポイント</h2>
+    <ul style="margin:0;padding-left:1.2em;color:var(--ink-2);font-size:.92rem;line-height:2.05">
+      <li>2進法 → 10進法：<strong>1が立っている位の重み（1・2・4・8・16…）を足す</strong>。</li>
+      <li>10進法 → 2進法：<strong>2で割り続けて、あまりを下から読む</strong>。</li>
+      <li>小数：2進法の位の重みは <span class="mono">0.5・0.25・0.125…</span>。10進法から直すには<strong>2をかけて整数部分を上から読む</strong>。</li>
+      <li>2進法4桁＝16進法1桁。<strong>右から4桁ずつ区切る</strong>。</li>
+      <li>10進法で割り切れる小数でも、<strong>2進法では割り切れないことがある</strong>（0.1など）。これが演算誤差の原因になる。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h2><span class="no">活用</span>授業・探究での使い方</h2>
+    <div class="use-note">
+      <h3>授業で</h3>
+      <ul>
+        <li>STEP 1 のビットをクリックさせ、位の重みを足すだけで10進法になることを確認する。</li>
+        <li>STEP 2 の割り算の筆算は、板書の手順とそのまま対応している。</li>
+        <li>STEP 4 のドリルは毎回問題が変わるので、小テストとして繰り返し使える。</li>
+      </ul>
+      <h3 style="margin-top:12px">探究で</h3>
+      <ul>
+        <li>16進法が使われる場面（色コード、MACアドレスなど）を調べる。</li>
+        <li>2進法4桁が16進法1桁に対応する理由を、位の重みから説明する。</li>
+        <li>小数の2進法変換で、割り切れない数（0.1など）があることを確かめる。</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  情報Ⅰ 共通テスト対策問題集（技術評論社）連動Webアプリ　/　Created by Dit-Lab.(Daiki ITO)　/　Supported by Tomoaki ATSUMI
+</footer>
+
+<script src="js/tools.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/terms.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
