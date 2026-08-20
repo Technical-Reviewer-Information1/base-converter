@@ -149,6 +149,12 @@
     fb.innerHTML = ok ? '正解です。' : '正解は <strong>' + dAns + '</strong>。上のSTEPにもどって手順を確かめましょう。';
   }
 
+  /* 本文の問題 */
+  function drawBook() {
+    if (!document.getElementById('bookBox')) return;
+    window.Quiz.choice('bookBox', 'bookNote', [{"k": "ア", "q": "10進法14を2進法で表すと。", "ch": ["1001", "1010", "1110", "1101"], "a": 2, "why": "14 ＝ 8＋4＋2 ＝ 1110（2）です。"}, {"k": "イ", "q": "10進法0.375を2進法で表すと。", "ch": ["0.001", "0.011", "0.101", "0.111"], "a": 1, "why": "0.375 ＝ 0.25＋0.125 ＝ 0×2⁻¹＋1×2⁻²＋1×2⁻³ ＝ 0.011（2）です。"}, {"k": "ウ", "q": "2進法1100101（2）を10進法で表すと。", "ch": ["101", "105", "110", "115"], "a": 0, "why": "64＋32＋4＋1 ＝ 101 です。"}, {"k": "エ", "q": "2進法0.101（2）を10進法で表すと。", "ch": ["0.375", "0.5", "0.625", "0.75"], "a": 2, "why": "0.5＋0.125 ＝ 0.625 です。"}, {"k": "オ", "q": "2進法11010110（2）を16進法で表すと。", "ch": ["C5", "D6", "A6", "F8"], "a": 1, "why": "4桁ずつ区切って 1101｜0110 ＝ D｜6 なので D6（16）です。<strong>2進法4桁が16進法1桁</strong>になります。"}], "本文の答えは【ア】②　【イ】①　【ウ】⓪　【エ】②　【オ】① です。");
+  }
+
   function init() {
     document.querySelectorAll('[data-bin]').forEach(b => b.addEventListener('click', () => {
       bits = b.dataset.bin.split('').map(Number); drawBits();
@@ -164,6 +170,7 @@
     $('dNext').addEventListener('click', newDrill);
     window.Terms.glossary($('glossBox'), ['基数変換', '2進法', '16進法', 'デジタル', '演算誤差', '丸め誤差']);
     drawBits(); drawDiv(); drawFrac(); newDrill();
+    drawBook();
     window.Terms.attach();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
