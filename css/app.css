@@ -33,4 +33,6 @@ table.tbl td .blankin{width:100%; max-width:none}
 .hexmap .g{border:1px solid var(--rule); padding:8px 10px; text-align:center; background:var(--paper)}
 .hexmap .g .b4{font-family:var(--mono); font-size:.95rem; letter-spacing:.1em}
 .hexmap .g .hx{font-family:var(--mono); font-size:1.3rem; font-weight:700; color:var(--accent)}
-.bigval{font-family:var(--mono); font-size:2rem; font-weight:700; text-align:center}
+.bigval{font-family:var(--mono); font-size:2rem; font-weight:700; text-align:center;
+  overflow-wrap:anywhere; word-break:break-all; line-height:1.35}
+@media(max-width:560px){ .bigval{font-size:1.35rem} }
